@@ -1,0 +1,95 @@
+<div class="app-content content bg-white">
+    <div class="content-wrapper">
+      <!-- INICIO Breadcrumbs -->
+      <div class="content-header row">
+        <div class="content-header-left col-md-6 col-12">
+          <h3 class="content-header-title">Buscar Pacientes</h3>
+          <div class="row breadcrumbs-top">
+            <div class="breadcrumb-wrapper col-12">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/manage/inicio">Inicio</a>
+                </li>
+                <li class="breadcrumb-item"><a routerLink="/manage/bandeja-proyectos">Gestión Pacientes</a>
+                </li>
+                <li class="breadcrumb-item active">Bandeja Pacientes
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- FIN Breadcrumbs -->
+      <div class="content-body">
+        <section id="configuration">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Lista de Resultado</h4>
+                  <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                </div>
+                <div class="card-content collapse show">
+                  <div class="card-body card-dashboard">
+                    <div class="row">
+                      <div class="form-group" style="overflow-x:scroll;">
+                        <div class="col-md-12">
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered" style="table-layout: fixed;">
+                              <thead>
+                                <tr>
+                                  <th scope="col" style="text-align: center;width: 110px;">Dueño</th>              
+                                  <th scope="col" style="text-align: center;width: 250px;">Mascota</th>
+                                  <th scope="col" style="text-align: center;width: 300px;">Raza</th>
+                                  <th scope="col" style="text-align: center;width: 200px;">Edad</th>
+                                  <th scope="col" style="text-align: center;width: 80px;">Acciones</th>
+                                </tr>
+                              </thead>
+                              <div *ngIf="mascotaList.length == 0; then NoexistenRegistro  else MostrarRegistro"></div>
+                              <ng-template #NoexistenRegistro>
+                                <tbody>
+                                  <tr>
+                                    <td colspan="5" style="text-align: center;">No se encontraron resultados para la
+                                      Búsqueda</td>
+                                  </tr>
+                                </tbody>
+                              </ng-template>
+                              <ng-template #MostrarRegistro>
+                                <tbody >
+                                  <tr  *ngFor="let item of mascotaList; let i = index">
+                                    <ng-container *ngIf = getBreedName(item.breed_id) != "" && getOwnerName(item.owner_id) != "">
+                                      <td style="text-align: center;width: 110px;">{{getOwnerName(item.owner_id)}}</td>
+                                      <td style="text-align: center">{{item.name}}</td>
+                                      <td style="text-align: center">{{getBreedName(item.breed_id)}}</td>
+                                      <td style="text-align: center">{{item.age}}</td>
+                                      <td style="text-align: center"> 
+                                        <a title="Aceptar Paciente" (click)="aceptarPaciente(item)"> <i
+                                          class="fa fa-check"></i> </a>
+                                      </td>
+                                    </ng-container>
+                                  </tr>
+                                </tbody>
+                                <br>
+                              </ng-template>
+                            </table>
+                          </div>
+                        </div>
+  
+                      </div>
+                    </div>
+  
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+          </div>
+        </section>
+        <!-- FIN Tabla Tabla Listado de Errores -->
+      </div>
+    </div>
+  </div> 
+  
+  <ngx-spinner name="SpinnerProject" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-spin-clockwise" [fullScreen] = "true">
+      <p style="color: white">Please Wait. </p>  
+  </ngx-spinner>

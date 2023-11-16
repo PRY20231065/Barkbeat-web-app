@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row h-100">
+    <div class=" col-sm-12  my-auto">
+      <div class="login-area col-xs-12 col-md-4 mx-auto">
+        <img src="assets/images/logo/logo1.png" style="width: 250px !important;">
+
+        <!-- INICIO Alerta -->
+        <div *ngIf="mensajeValidacionServidor" class="alert bg-danger alert-icon-left alert-dismissible mb-2"
+          role="alert" data-appear="appear" data-animation="zoomIn">
+          <span class="alert-icon"><i class="la la-thumbs-o-down"></i></span>
+          {{mensajeValidacionServidor}} 
+        </div>
+
+        <!-- FIN Alerta -->
+        <form class="form-horizontal" #f="ngForm" novalidate>
+
+          <fieldset class="form-group position-relative has-icon-left">
+            <label class="txt-azul" for="usuario">Usuario</label>
+            <input type="text" class="form-control" id="suser" name="suser" required [(ngModel)]="userParams.email"
+              #SUSER="ngModel" placeholder="Tu usuario" (keyup)="clearMensaje('usuario')">
+            <div class="form-control-position"><i class="ft-user"></i></div>
+          </fieldset>
+
+          <fieldset class="form-group position-relative has-icon-left">
+            <label for="pass">Contraseña</label>
+            <input type="password" class="form-control" id="spassword" name="spassword"
+              [(ngModel)]="userParams.password" placeholder="Ingresa contraseña" required
+              (keyup)="clearMensaje('password')">
+            <div class="form-control-position"><i class="la la-key"></i></div>
+          </fieldset>
+
+          <div class="form-group col-md-8 mx-auto">
+            <button type="submit" class="btn btn-outline-info btn-block" (click)="serviceLogin(f)">
+              <i class="ft-unlock"></i>Ingresar</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

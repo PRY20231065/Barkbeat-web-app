@@ -1,0 +1,168 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{titleProjectModal}}</h4>
+</div>
+<div class="modal-body">
+  <div class="container text-center">
+    <div class="form-horizontal">
+      <mat-tab-group #tabset [(selectedIndex)]="selectedIndex" (selectedTabChange)="tabChanged($event)">
+        <mat-tab id="tab-1" label="Información">
+            <div class="row" style="margin-top: 20px; max-width: 100%;">
+              <div class="col-6">
+                <mat-form-field class="full-width">
+                  <mat-label>Propietario</mat-label>
+                  <input matInput [(ngModel)]="dog.sowner" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-6">
+                <mat-form-field class="full-width">
+                  <mat-label>Nombre de la Mascota</mat-label>
+                  <input matInput [(ngModel)]="dog.name" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" style="margin-top: 20px; max-width: 100%;">
+              <div class="col-6">
+                <mat-form-field class="full-width">
+                  <mat-label>Edad de la Mascota</mat-label>
+                  <input matInput [(ngModel)]="dog.age" type="number" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-6">
+                <mat-form-field class="full-width">
+                  <mat-label>Peso de la Mascota</mat-label>
+                  <input matInput [(ngModel)]="dog.weight" type="number" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" style="margin-top: 20px; max-width: 100%;">
+              <div class="col-12">
+                <mat-form-field class="full-width">
+                  <mat-label>Raza de la Mascota</mat-label>
+                  <input matInput [(ngModel)]="dog.sbreed" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+        </mat-tab>
+        <mat-tab id="tab-2" label="Electrocardiograma">
+          <div class="row" style="margin-top: 20px; max-width: 100%;">
+            <div class="col-lg-12" >
+              <div style="height: 350px;">
+                <canvas id="linechartEcg">
+                </canvas>
+              </div>
+              <div class="row" style="padding-top: 20px;">
+                <div class="form-group col-md-3 col-sm-12">
+                  <label >Raza</label>
+                  <select class="form-control block" [(ngModel)]="ecgSelectedBreedId" (ngModelChange)="getDogsByBreedId()">
+                    <option value="0">-- Seleccione --</option>
+                    <option *ngFor="let item of breedList" [value]="item.id">
+                      {{item.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-5 col-sm-12">
+                  <label >Mascota</label>
+                  <select class="form-control block" [(ngModel)]="ecgSelectedDogId">
+                    <option value="0">-- Seleccione --</option>
+                    <option *ngFor="let item of dogListByBreed" [value]="item.id">
+                      {{item.name}}; {{item.age}} años
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                  <button type="button" class="btn btn-outline-info btn-active" style="margin-top: 20px;" (click)="CompararEcg()">
+                    &nbsp;Comparar
+                  </button>
+                </div>
+              </div>
+              <div style="height: 350px;">
+                <canvas id="linechartEcg2">
+                </canvas>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab id="tab-3" label="Frecuencia Cardíaca">
+          <div class="row" style="margin-top: 20px; max-width: 100%;">
+            <div class="col-lg-12" >
+              <div style="height: 350px;">
+                <canvas id="linechartFc">
+                </canvas>                
+              </div>
+
+
+              
+              <div class="row" style="padding-top: 20px;">
+                <div class="form-group col-md-3 col-sm-12">
+                  <label >Raza</label>
+                  <select class="form-control block" [(ngModel)]="ecgSelectedBreedId" (ngModelChange)="getDogsByBreedId()">
+                    <option value="0">-- Seleccione --</option>
+                    <option *ngFor="let item of breedList" [value]="item.id">
+                      {{item.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-5 col-sm-12">
+                  <label >Mascota</label>
+                  <select class="form-control block" [(ngModel)]="ecgSelectedDogId">
+                    <option value="0">-- Seleccione --</option>
+                    <option *ngFor="let item of dogListByBreed" [value]="item.id">
+                      {{item.name}}; {{item.age}} años
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                  <button type="button" class="btn btn-outline-info btn-active" style="margin-top: 20px;" (click)="CompararFc()">
+                    &nbsp;Comparar
+                  </button>
+                </div>
+              </div>
+
+              <div style="height: 350px;">
+                <canvas id="linechartFc2">
+                </canvas>                
+              </div>
+
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab id="tab-4" label="Generar Reporte">
+          <div class="row" style="margin-top: 20px; max-width: 100%;">
+            <div class="col-12">
+              <mat-form-field class="full-width">
+                <mat-label>Descripción</mat-label>
+                <textarea  matInput [(ngModel)]="report.description" style="height: 40px;"></textarea>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12"  style="text-align: left;">
+              <p>Indicaciones</p>
+              <div *ngFor="let indication of report.indications; let i = index">
+                <mat-form-field style="width: 300px;">
+                  <input matInput [(ngModel)]="report.indications[i]"  readonly>
+                </mat-form-field>
+                <button mat-icon-button (click)="removeIndication(i)" style="padding-left: 5px;">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+              <mat-form-field style="width: 300px;">
+                <input matInput [(ngModel)]="nuevaIndicacion">
+              </mat-form-field>
+              <button mat-raised-button (click)="addIndication()">Agregar Indicación</button>
+            </div>
+
+            <div class="form-group col-md-4 col-sm-12">
+              <button type="button" class="btn btn-outline-info btn-active" style="margin-top: 20px;" (click)="createReport()">
+                &nbsp;Generar Reporte
+              </button>
+            </div>
+          </div>
+      </mat-tab>
+
+      </mat-tab-group>
+      <br>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner name="SpinnerProject" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-spin-clockwise" [fullScreen] = "true">
+  <p style="color: white">Please Wait. </p>  
+</ngx-spinner>
