@@ -1,9 +1,7 @@
 pipeline {
   agent any
 
-  tools {
-    nodejs "node"
-  }
+ 
 
   parameters {
     string(name: 'container_name', defaultValue: 'Barkbeat_Web', description: 'Nombre del contenedor de docker.')
