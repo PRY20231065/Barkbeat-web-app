@@ -6,14 +6,14 @@ pipeline {
   }
 
   parameters {
-    string(name: 'container_name', defaultValue: 'Barkbeat_Web', description: 'Nombre del contenedor de docker.')
+    string(name: 'container_name', defaultValue: 'Barkbeat-WebApp', description: 'Nombre del contenedor de docker.')
     string(name: 'image_name', defaultValue: 'barkbeat_web_img', description: 'Nombre de la imagene docker.')
     string(name: 'tag_image', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
     string(name: 'container_port', defaultValue: '80', description: 'Puerto que usa el contenedor')
   }
 
   stages {
-    stage('install') {
+    stage('Install') {
       steps {
         git branch: 'main', url: 'https://github.com/PRY20231065/Barkbeat-web-app.git'
         sh 'npm install'
