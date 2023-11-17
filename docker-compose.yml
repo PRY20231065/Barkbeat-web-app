@@ -1,0 +1,11 @@
+version: '3'
+services:
+  barkbeat-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: barkbeat_web_img:lts
+    container_name: Barkbeat-WebApp
+    restart: always
+    ports:
+      - "80:80"

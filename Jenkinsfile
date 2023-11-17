@@ -1,10 +1,6 @@
 pipeline {
   agent any
 
-  tools {
-    nodejs "node"
-  }
-
   parameters {
     string(name: 'container_name', defaultValue: 'Barkbeat-WebApp', description: 'Nombre del contenedor de docker.')
     string(name: 'image_name', defaultValue: 'barkbeat_web_img', description: 'Nombre de la imagene docker.')
@@ -13,16 +9,14 @@ pipeline {
   }
 
   stages {
-    stage('Install') {
+    stage('Checkout') {
       steps {
         git branch: 'main', url: 'https://github.com/PRY20231065/Barkbeat-web-app.git'
-        sh 'npm install'
       }
     }
 
-    stage('build') {
+    stage('Install & Build') {
       steps {
-
           script {
             try {
               sh 'docker stop ${container_name}'
@@ -32,13 +26,11 @@ pipeline {
               echo 'Exception occurred: ' + e.toString()
             }
           }
-          sh 'npm run build'
           sh 'docker build -t ${image_name}:${tag_image} .'
-
       }
     }
 
-    stage('deploy') {
+    stage('Deploy') {
       steps {
         sh 'docker run -d --restart always -p ${container_port}:80 --name ${container_name} ${image_name}:${tag_image}'
       }
