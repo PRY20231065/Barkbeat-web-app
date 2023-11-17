@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Dog } from '../../model/dog/dog';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,7 @@ export class DogService {
   httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
 
-  apiUrl: string = 'http://34.204.154.158:443/api/v1/dogs';
-
+  apiUrl: string = environment.API_DOGS;
 
   constructor(private http: HttpClient) { }
 

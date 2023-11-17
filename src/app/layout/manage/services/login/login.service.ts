@@ -3,14 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { UserParams } from 'src/app/layout/manage/model/user/user-params';
 import { Login } from 'src/app/layout/manage/model/login/login';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  apiUrl: string = 'http://107.21.241.233:443/api/v1/authenticate/veterinarian'; 
 
+  apiUrl: string = environment.API_LOGIN;
 
   constructor(private http: HttpClient) { }
 
