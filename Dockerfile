@@ -8,3 +8,4 @@ FROM nginx:latest
 COPY --from=build /usr/local/app/dist/barkbeat /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
+Expose 443
